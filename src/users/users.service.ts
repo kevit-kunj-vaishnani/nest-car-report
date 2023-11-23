@@ -17,8 +17,13 @@ export class UsersService {
         return user;
     }
 
-    async createUser(user): Promise<User> {
-        const result = this.userModel.create(user);
+    async findByEmail(email: string) {
+        const user = await this.userModel.find({email});
+        return user;
+    }
+
+    async createUser(email:string, password:string) {
+        const result = await this.userModel.create({email, password });
         return result
     }
 
@@ -32,7 +37,7 @@ export class UsersService {
         return user;
     }
 
-    async findOneUserByIdAndUpdate(id: string, attrs: Partial<User>){
+    async findOneUserByIdAndUpdate(id: string, attrs: Partial<User>){       // Partial will allow us to manipulate few fields only of db.
 
         const user = await this.userModel.findById(id);
 
